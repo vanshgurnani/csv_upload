@@ -1,0 +1,45 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Data Table</title>
+</head>
+<body>
+  <h1>User Data Table</h1>
+  <table id="userData">
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Password</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Fetch data from the server and populate the table
+      fetch('/data')
+        .then(response => response.json())
+        .then(users => {
+          const tableBody = document.querySelector('#userData tbody');
+
+          // Iterate over the user data and create table rows
+          users.forEach(user => {
+            const row = document.createElement('tr');
+            row.innerHTML = `<td>${user.username}</td><td>${user.password}</td>`;
+            tableBody.appendChild(row);
+          });
+        })
+        .catch(error => {
+          console.error('Error fetching user data:', error);
+          alert('Error fetching user data. Please try again.');
+        });
+    });
+  </script>
+</body>
+</html>
